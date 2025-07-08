@@ -84,12 +84,37 @@ Log in using the following test credentials:
 ## 📂 Project Structure
 
 src/
-├── components/ # Reusable UI pieces
-├── context/ # Auth context
-├── mocks/ # MSW mock handlers
-├── pages/ # Route-level pages (Dashboard, Login, etc.)
-├── routes/ # ProtectedRoute wrapper
-└── main.tsx # App entry point
+├── assets/ # static images/icons
+├── components/
+│ ├── common/ # generic, reusable UI elements
+│ ├── dashboard/ # Dashboard-specific components
+│ │ ├── WalletCard.tsx
+│ │ ├── TransactionList.tsx
+│ │ ├── ChartPanel.tsx
+│ │ └── PromoBanner.tsx
+│ └── layout/ # Layout components (Sidebar, Modal)
+│ ├── Sidebar.tsx
+│ └── TransactionModal.tsx
+├── context/ # Application contexts (AuthContext)
+│ └── AuthContext.tsx
+├── features/ # Domain logic grouped
+│ ├── auth/ # login form, hooks
+│ ├── transactions/ # query + mutation hooks
+│ └── wallet/ # query hooks
+├── lib/
+│ ├── api/ # fetch functions (login, wallet, transactions)
+│ └── msw/ # mock service worker setup & handlers
+├── hooks/ # Custom React hooks
+├── pages/ # Route-level pages
+│ ├── Login.tsx
+│ ├── DashboardUser.tsx
+│ ├── AdminDashboard.tsx
+│ └── SuperAdminDashboard.tsx
+├── routes/ # Route configuration and ProtectedRoute
+├── types/ # Shared TypeScript types/interfaces
+├── App.tsx # Core layout and routing wrapper
+├── main.tsx # App entry point, providers
+└── index.css # Global styles (Tailwind imports)
 
 ---
 
