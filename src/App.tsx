@@ -11,6 +11,7 @@ import PaymentSummary from "./pages/admin/payment-summary";
 import Employees from "./pages/admin/employees";
 import Statistics from "./pages/admin/statistics";
 import UserCheckGuard from "./guards/user-check-guard";
+import ErrorPage from "./pages/error-page";
 
 const router = createBrowserRouter([
   {
@@ -20,10 +21,12 @@ const router = createBrowserRouter([
         <Login />
       </UserCheckGuard>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "dashboard",
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/dashboard",
@@ -32,12 +35,14 @@ const router = createBrowserRouter([
             <DashboardUser />
           </ProtectedRoute>
         ),
+        errorElement: <ErrorPage />,
       },
     ],
   },
   {
     path: "admin",
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "users",
@@ -46,6 +51,7 @@ const router = createBrowserRouter([
             <Users />
           </ProtectedRoute>
         ),
+        errorElement: <ErrorPage />,
       },
       {
         path: "payment-summary",
@@ -54,6 +60,7 @@ const router = createBrowserRouter([
             <PaymentSummary />
           </ProtectedRoute>
         ),
+        errorElement: <ErrorPage />,
       },
       {
         path: "employees",
@@ -62,6 +69,7 @@ const router = createBrowserRouter([
             <Employees />
           </ProtectedRoute>
         ),
+        errorElement: <ErrorPage />,
       },
       {
         path: "statistics",
@@ -70,18 +78,28 @@ const router = createBrowserRouter([
             <Statistics />
           </ProtectedRoute>
         ),
+        errorElement: <ErrorPage />,
       },
     ],
   },
 ]);
 
 function App() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: 1,
+      },
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
       <Toaster position="bottom-center" reverseOrder={false} />
-      <AuthProvider>{<RouterProvider router={router} />}</AuthProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
