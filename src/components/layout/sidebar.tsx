@@ -3,7 +3,11 @@ import { navItems } from "@/utils/data";
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { useAuth } from "@/context/auth-context";
 
-export default function Sidebar() {
+interface SidebarProps {
+  sidebarId: string;
+}
+
+export default function Sidebar({ sidebarId }: SidebarProps) {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
 
@@ -13,11 +17,19 @@ export default function Sidebar() {
     navigate("/");
   };
 
+  // Close sidebar on mobile after clicking a nav item
+  const handleNavClick = () => {
+    if (window.innerWidth < 768) {
+      const checkbox = document.getElementById(sidebarId) as HTMLInputElement;
+      if (checkbox) checkbox.checked = false;
+    }
+  };
+
   return (
-    <aside className="bg-[#121212] text-white w-64 h-screen flex flex-col justify-between fixed top-0 left-0 z-10 p-4 hidden md:flex">
+    <aside className="bg-[#121212] text-white w-full h-full flex flex-col justify-between p-4 overflow-y-auto">
       {/* Logo or User Info */}
       <div>
-        <img src="/logo.png" alt="" />
+        <img src="/logo.png" alt="Chapa Logo" className="h-8 w-auto" />
 
         <nav className="space-y-2 mt-10">
           {navItems
@@ -28,9 +40,12 @@ export default function Sidebar() {
                 to={item.to}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${
-                    isActive ? "bg-[#78C306] text-black" : "hover:bg-[#78C306]"
+                    isActive
+                      ? "bg-[#78C306] text-black"
+                      : "text-gray-300 hover:bg-[#78C306] hover:text-black"
                   }`
                 }
+                onClick={handleNavClick}
               >
                 {item.icon}
                 <span className="text-sm font-medium">{item.label}</span>
@@ -42,7 +57,7 @@ export default function Sidebar() {
       {/* Logout */}
       <div className="mt-auto">
         <button
-          className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-600 w-full"
+          className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-600 w-full text-left"
           onClick={handleLogout}
         >
           <ArrowRightEndOnRectangleIcon className="w-5 h-5" />
