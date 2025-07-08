@@ -9,6 +9,7 @@ import BasicTable from "@/components/shared/basic-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatCurrency } from "@/utils";
 import WalletSkeletonLoader from "@/components/ui/wallet-skeleton-loader";
+import StatCard from "@/components/ui/stat-card";
 
 export default function Statistics() {
   const { data: stats, isLoading: isLoadingStats } = useQuery({
@@ -204,22 +205,6 @@ export default function Statistics() {
           />
         </div>
       </div>
-    </div>
-  );
-}
-
-interface StatCardProps {
-  title: string;
-  value: string | number;
-  description: string;
-}
-
-function StatCard({ title, value, description }: StatCardProps) {
-  return (
-    <div className="bg-gray-800 rounded-lg shadow-lg p-4">
-      <h3 className="text-sm font-medium text-gray-400 mb-1">{title}</h3>
-      <div className="text-2xl font-bold text-white mb-1">{value}</div>
-      <p className="text-xs text-gray-400">{description}</p>
     </div>
   );
 }
