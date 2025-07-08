@@ -47,6 +47,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const email = sessionStorage.getItem("user");
     if (email) {
       getCurrentUser(email);
+    } else {
+      setInitialize(false);
     }
   }, []);
 
