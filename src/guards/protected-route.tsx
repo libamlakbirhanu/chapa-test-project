@@ -1,5 +1,5 @@
-// src/routes/ProtectedRoute.tsx
 import { useAuth } from "@/context/auth-context";
+import Unauthorized from "@/components/unauthorized";
 import { Navigate } from "react-router-dom";
 
 export default function ProtectedRoute({
@@ -11,9 +11,16 @@ export default function ProtectedRoute({
 }) {
   const { user } = useAuth();
 
-  if (!user) return <Navigate to="/" replace />;
-  if (!allowedRoles.includes(user?.role || ""))
+  // If user is not logged in, show unauthorized
+  if (!user) {
     return <Navigate to="/" replace />;
+  }
 
-  return children;
+  // If user doesn't have the required role, show unauthorized
+  if (!allowedRoles.includes(user.role || "")) {
+    return <Unauthorized />;
+  }
+
+  // User is authenticated and has the required role
+  return <>{children}</>;
 }
