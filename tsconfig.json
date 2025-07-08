@@ -24,7 +24,6 @@
     // types
     "types": [
       "node",
-      "vite-plugin-pages/client-react"
     ],
     // import alias
     "baseUrl": "./",
