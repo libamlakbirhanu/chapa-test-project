@@ -6,13 +6,7 @@ import {
 import TransactionSkeletonLoader from "./ui/transaction-skeleton-loader";
 import { Transition } from "@headlessui/react";
 import { Fragment } from "react";
-
-type Transaction = {
-  id: number;
-  amount: number;
-  to: string;
-  date: string;
-};
+import { Transaction } from "@/types";
 
 type Props = {
   transactions: Transaction[];

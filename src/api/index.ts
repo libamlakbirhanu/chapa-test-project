@@ -1,3 +1,5 @@
+import { AddAdminUserData, PaymentSummaryType, SystemStats } from "@/types";
+
 export const toggleUserStatus = async (userId: string) => {
   const res = await fetch(`/api/users/${userId}/toggle`, {
     method: "POST",
@@ -30,13 +32,6 @@ export const getUser = async (email: string) => {
   if (!res.ok) throw new Error("Failed to remove user");
   return res.json();
 };
-
-export interface AddAdminUserData {
-  username: string;
-  email: string;
-  password: string;
-  role: "admin" | "super-admin";
-}
 
 export const addAdminUser = async (userData: AddAdminUserData) => {
   const res = await fetch("/api/admins/add", {
@@ -79,20 +74,6 @@ export const fetchCompanyUsers = async (email: string) => {
   if (!res.ok) throw new Error("Failed to fetch users");
   return res.json();
 };
-
-export interface SystemStats {
-  totalPayments: number;
-  activeUsers: number;
-  admins: number;
-}
-
-export interface PaymentSummaryType {
-  userId: string;
-  username: string;
-  totalSent: number;
-  totalReceived: number;
-  transactionCount: number;
-}
 
 export const fetchSystemStats = async (): Promise<SystemStats> => {
   const res = await fetch("/api/stats");

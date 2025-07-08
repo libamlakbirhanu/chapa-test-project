@@ -1,15 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import Chart from "react-apexcharts";
-import {
-  fetchSystemStats,
-  fetchPaymentSummaries,
-  PaymentSummaryType,
-} from "@/api";
+import { fetchSystemStats, fetchPaymentSummaries } from "@/api";
 import BasicTable from "@/components/shared/basic-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatCurrency } from "@/utils";
 import WalletSkeletonLoader from "@/components/ui/wallet-skeleton-loader";
 import StatCard from "@/components/ui/stat-card";
+import { PaymentSummaryType } from "@/types";
 
 export default function Statistics() {
   const { data: stats, isLoading: isLoadingStats } = useQuery({

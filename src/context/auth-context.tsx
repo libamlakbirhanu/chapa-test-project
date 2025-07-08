@@ -3,14 +3,7 @@ import { getUser } from "@/api";
 import { useMutation } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
 import FullPageLoader from "@/components/ui/full-page-loader";
-
-type Role = "user" | "admin" | "super-admin" | null;
-
-type AuthContextType = {
-  user: { role: Role; email: string; username: string } | null;
-  login: (user: { role: Role; email: string; username: string }) => void;
-  logout: () => void;
-};
+import { AuthContextType, Role } from "@/types";
 
 const AuthContext = createContext<AuthContextType>({
   user: {

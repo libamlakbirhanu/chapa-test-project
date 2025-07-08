@@ -9,15 +9,7 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import { useAuth } from "@/context/auth-context";
 import { Button } from "@headlessui/react";
 import EmployeeModal from "@/components/employee-modal";
-
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  role: string;
-  active: boolean;
-  balance: number;
-}
+import { User } from "@/types";
 
 const Employees = () => {
   const { user } = useAuth();

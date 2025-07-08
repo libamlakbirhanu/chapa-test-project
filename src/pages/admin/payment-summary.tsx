@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchPaymentSummaries, PaymentSummaryType } from "@/api";
+import { fetchPaymentSummaries } from "@/api";
 import Skeleton from "@/components/ui/wallet-skeleton-loader";
 import Chart from "react-apexcharts";
+import { PaymentSummaryType } from "@/types";
 
 const PaymentSummary = () => {
   const {

@@ -6,15 +6,7 @@ import { Switch } from "@headlessui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ConfirmationModal } from "@/components/confirmation-modal";
 import toast from "react-hot-toast";
-
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  role: string;
-  active: boolean;
-  balance: number;
-}
+import { User } from "@/types";
 
 const Users = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
