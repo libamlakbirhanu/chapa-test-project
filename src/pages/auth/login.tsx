@@ -6,8 +6,9 @@ import toast from "react-hot-toast";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { userLogin } from "@/api";
 
-type Inputs = {
+export type Inputs = {
   email: string;
   password: string;
 };
@@ -31,15 +32,7 @@ export default function Login() {
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: Inputs) => {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Login failed");
-      return res.json();
-    },
+    mutationFn: userLogin,
   });
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {

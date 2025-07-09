@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useAuth } from "@/context/auth-context";
+import { sendTransaction } from "@/api";
 
 type Props = {
   isOpen: boolean;
@@ -24,20 +25,6 @@ const schema = z.object({
     .max(100000, "Amount is too large"),
   to: z.string().min(1, "Recipient is required"),
 });
-
-const sendTransaction = async (form: {
-  amount: string;
-  to: string;
-  userId: string;
-}) => {
-  const res = await fetch("/api/transactions/send", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(form),
-  });
-  if (!res.ok) throw new Error("Failed to send transaction");
-  return res;
-};
 
 export default function TransactionModal({ isOpen, onClose }: Props) {
   const { user } = useAuth();

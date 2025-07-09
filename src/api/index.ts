@@ -1,3 +1,4 @@
+import { Inputs } from "@/pages/auth/login";
 import { AddAdminUserData, PaymentSummaryType, SystemStats } from "@/types";
 
 export const toggleUserStatus = async (userId: string) => {
@@ -18,7 +19,9 @@ export const removeEmployee = async (userId: string) => {
       "Content-Type": "application/json",
     },
   });
-  if (!res.ok) throw new Error("Failed to remove user");
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Failed to remove user");
   return res.json();
 };
 
@@ -29,8 +32,10 @@ export const getUser = async (email: string) => {
       "Content-Type": "application/json",
     },
   });
-  if (!res.ok) throw new Error("Failed to remove user");
-  return res.json();
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Failed to remove user");
+  return data;
 };
 
 export const addAdminUser = async (userData: AddAdminUserData) => {
@@ -41,50 +46,98 @@ export const addAdminUser = async (userData: AddAdminUserData) => {
     },
     body: JSON.stringify(userData),
   });
-  if (!res.ok) throw new Error("Failed to add admin user");
-  return res.json();
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Failed to add admin user");
+  return data;
 };
 
 export const fetchWallet = async () => {
   const res = await fetch("/api/wallet");
-  if (!res.ok) throw new Error("Failed to fetch wallet");
-  return res.json();
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Failed to fetch wallet");
+  return data;
 };
 
 export const fetchTransactions = async () => {
   const res = await fetch("/api/transactions");
-  if (!res.ok) throw new Error("Failed to fetch transactions");
-  return res.json();
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Failed to fetch transactions");
+  return data;
 };
 
 export const fetchMyTransactions = async (email: string) => {
   const res = await fetch(`/api/transactions/mine?email=${email}`);
-  if (!res.ok) throw new Error("Failed to fetch transactions");
-  return res.json();
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Failed to fetch transactions");
+  return data;
 };
 
 export const fetchUsers = async () => {
   const res = await fetch("/api/users");
-  if (!res.ok) throw new Error("Failed to fetch users");
-  return res.json();
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Failed to fetch users");
+  return data;
 };
 
 export const fetchCompanyUsers = async (email: string) => {
   const res = await fetch(`/api/company-users?email=${email}`);
-  if (!res.ok) throw new Error("Failed to fetch users");
-  return res.json();
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Failed to fetch users");
+  return data;
 };
 
 export const fetchSystemStats = async (): Promise<SystemStats> => {
   const res = await fetch("/api/stats");
-  if (!res.ok) throw new Error("Failed to fetch system statistics");
-  return res.json();
+
+  const data = await res.json();
+  if (!res.ok)
+    throw new Error(data.error || "Failed to fetch system statistics");
+  return data;
 };
 
 export const fetchPaymentSummaries = async (): Promise<
   PaymentSummaryType[]
 > => {
   const res = await fetch("/api/payment-summary");
-  if (!res.ok) throw new Error("Failed to fetch payment summaries");
-  return res.json();
+
+  const data = await res.json();
+  if (!res.ok)
+    throw new Error(data.error || "Failed to fetch payment summaries");
+  return data;
+};
+
+export const sendTransaction = async (form: {
+  amount: string;
+  to: string;
+  userId: string;
+}) => {
+  const res = await fetch("/api/transactions/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(form),
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.error || "Failed to send transaction");
+  }
+  return res;
+};
+
+export const userLogin = async (input: Inputs) => {
+  const res = await fetch("/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Login failed");
+  return data;
 };
